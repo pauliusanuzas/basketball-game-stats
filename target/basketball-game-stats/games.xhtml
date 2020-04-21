@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Basketball stats</title>
+</h:head>
+
+<h:body>
+    <h2>Games of #{gamesOfTeam.team.name}</h2>
+    <ol>
+        <ui:repeat value="#{gamesOfTeam.allGames}" var="game">
+            <li><h:link value="#{game.homeTeam.name} #{game.awayTeam.name}  #{game.homeScore}-#{game.awayScore}" outcome="teams?leagueId=#{gamesOfTeam.league.id}" /></li>
+        </ui:repeat>
+    </ol>
+
+    <h3>Add new game</h3>
+    <h:form>
+        Home team: <h:selectOneMenu value="#{gamesOfTeam.homeTeamToAdd}">
+            <f:selectItems value="#{gamesOfTeam.league.participatingTeams}" var="team"
+                           itemLabel="#{team.name}" itemValue="#{team.id}" />
+        </h:selectOneMenu><br/>
+        Away team: <h:selectOneMenu value="#{gamesOfTeam.awayTeamToAdd}">
+            <f:selectItems value="#{gamesOfTeam.league.participatingTeams}" var="team"
+                           itemLabel="#{team.name}" itemValue="#{team.id}" />
+        </h:selectOneMenu><br/>
+        Home score: <h:inputText value="#{gamesOfTeam.gameToAdd.homeScore}" required="true" /><br/>
+        Away score: <h:inputText value="#{gamesOfTeam.gameToAdd.awayScore}" required="true" /><br/>
+        <h:commandButton value="Add new game" action="#{gamesOfTeam.addGame}">
+            <f:param name="leagueId" value="#{gamesOfTeam.league.id}" />
+            <f:param name="teamId" value="#{gamesOfTeam.team.id}" />
+        </h:commandButton>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Basketball stats</title>
+</h:head>
+
+<h:body>
+    <h2>Teams competing in #{teamsOfLeague.league.name}</h2>
+    <ol>
+        <ui:repeat value="#{teamsOfLeague.league.participatingTeams}" var="team">
+            <li>
+                <h:link value="#{team.country} #{team.name}" outcome="games" >
+                    <f:param name="teamId" value="${team.id}"/>
+                    <f:param name="leagueId" value="${teamsOfLeague.league.id}"/>
+                </h:link>
+            </li>
+        </ui:repeat>
+    </ol>
+
+    <h3>Add new team to the league</h3>
+    <h:form>
+        Team name: <h:inputText value="#{teamsOfLeague.teamToAdd.name}" required="true" /><br/>
+        Team city: <h:inputText value="#{teamsOfLeague.teamToAdd.country}" required="true" /><br/>
+        <h:commandButton value="Add new team to the league" action="#{teamsOfLeague.createTeam()}">
+            <f:param name="leagueId" value="#{teamsOfLeague.league.id}" />
+        </h:commandButton>
+    </h:form>
+</h:body>
+
+</html>
